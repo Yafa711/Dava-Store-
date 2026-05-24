@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "194751529366",
+    "project_id": "dava-store-fae79",
+    "storage_bucket": "dava-store-fae79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194751529366:android:19c055075a9ab349a9ddb7",
+        "android_client_info": {
+          "package_name": "Dava.Store.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO_SAKV2WOhyZc4PLdYjrkcOO8pzkjw6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194751529366:android:f1fbfa5b54014f52a9ddb7",
+        "android_client_info": {
+          "package_name": "com.yourcompany.dava_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO_SAKV2WOhyZc4PLdYjrkcOO8pzkjw6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
