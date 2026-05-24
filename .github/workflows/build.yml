@@ -3,6 +3,8 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # يحل تحذير جيت هاب تماماً
     steps:
       - uses: actions/checkout@v4
       
@@ -29,3 +31,4 @@ jobs:
         with:
           name: Dava-Store-APK
           path: build/app/outputs/flutter-apk/app-debug.apk
+
