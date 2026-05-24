@@ -1,21 +1,25 @@
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        def localPropertiesFile = new File(settingsDir, "local.properties")
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
+        }
+        def flashPath = properties.getProperty("flutter.sdk")
+        if (flashPath == null) {
+            flashPath = System.getenv("FLUTTER_ROOT")
+        }
+        if (flashPath == null) {
+            flashPath = "/opt/flutter"
+        }
+        return flashPath
+    }()
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+}
+
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+}
+
 include ':app'
-
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
-
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        properties.load(reader)
-    }
-}
-
-def flutterSdkPath = properties.getProperty('flutter.sdk')
-if (flutterSdkPath == null) {
-    flutterSdkPath = System.getenv('FLUTTER_ROOT')
-}
-if (flutterSdkPath == null) {
-    // مسار افتراضي احتياطي للسيرفر
-    flutterSdkPath = "/opt/flutter" 
-}
-
-apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
