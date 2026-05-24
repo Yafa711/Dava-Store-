@@ -1,0 +1,112 @@
+// firestore.rules
+// Firestore security rules for DAVA Store
+// Deploy with: firebase deploy --only firestore:rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function currentUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && currentUserData().role == 'super_admin';
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        (currentUserData().role == 'admin' || currentUserData().role == 'super_admin');
+    }
+
+    function hasPermission(perm) {
+      return isSignedIn() && (
+        isSuperAdmin() ||
+        (currentUserData().role == 'admin' &&
+         perm in currentUserData().permissions_list)
+      );
+    }
+
+    // ── Users collection ──────────────────────────────────────────────────────
+    match /users/{userId} {
+      // Anyone authenticated can read their own profile
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+
+      // Users can update their own non-role fields
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if isSignedIn() && (
+        // Own profile (but cannot change role or permissions)
+        (request.auth.uid == userId &&
+         !request.resource.data.diff(resource.data).affectedKeys()
+           .hasAny(['role', 'permissions_list']))
+        ||
+        // Super Admin can update anyone's role + permissions
+        isSuperAdmin()
+      );
+
+      // Only Super Admin can delete users
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Products collection ───────────────────────────────────────────────────
+    match /products/{productId} {
+      // Everyone (including unauthenticated) can read products
+      allow read: if true;
+
+      // Only admins with manage_products permission can write
+      allow create, update, delete: if hasPermission('manage_products');
+    }
+
+    // ── Offers collection ─────────────────────────────────────────────────────
+    match /offers/{offerId} {
+      // Authenticated users can read active offers
+      allow read: if isSignedIn();
+
+      // Only admins with manage_offers can write
+      allow create, update, delete: if hasPermission('manage_offers');
+    }
+
+    // ── Orders collection ─────────────────────────────────────────────────────
+    match /orders/{orderId} {
+      // Customers can read/create their own orders
+      allow read:   if isSignedIn() && (
+        resource.data.user_id == request.auth.uid ||
+        hasPermission('manage_orders')
+      );
+      allow create: if isSignedIn();
+      allow update, delete: if hasPermission('manage_orders');
+    }
+
+    // ── Categories collection ─────────────────────────────────────────────────
+    match /categories/{categoryId} {
+      allow read:                    if true;
+      allow create, update, delete:  if hasPermission('manage_categories');
+    }
+
+    // ── Carts collection ──────────────────────────────────────────────────────
+    match /carts/{cartId} {
+      allow read, write: if isSignedIn() && request.auth.uid == cartId;
+    }
+
+    // ── Notifications collection ──────────────────────────────────────────────
+    match /notifications/{notifId} {
+      allow read:   if isSignedIn() && (
+        resource.data.is_broadcast == true ||
+        resource.data.target_user_id == request.auth.uid
+      );
+      allow create: if hasPermission('send_notifications');
+      allow update, delete: if isSuperAdmin();
+    }
+
+    // ── Admin Settings ────────────────────────────────────────────────────────
+    match /admin_settings/{docId} {
+      allow read:  if isAdmin();
+      allow write: if isSuperAdmin();
+    }
+  }
+}
