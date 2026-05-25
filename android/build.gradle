@@ -5,17 +5,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        // استخدام النسخة 8.0.2 المستقرة عبر الـ classpath التقليدي
         classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.0'
     }
-}
-
-plugins {
-    // تعريف إصدارات البلاجنز بشكل مركزي لمنع تعارض الحزم
-    id "com.android.application" version "8.0.2" apply false
-    id "com.android.library" version "8.0.2" apply false
-    id "org.jetbrains.kotlin.android" version "1.9.0" apply false
 }
 
 allprojects {
