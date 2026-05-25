@@ -17,7 +17,7 @@
     <application
         android:label="DAVA Store"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:usesCleartextTraffic="false"
         android:requestLegacyExternalStorage="true">
 
