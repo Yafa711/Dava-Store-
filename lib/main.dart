@@ -25,13 +25,20 @@ Future<void> main() async {
     systemNavigationBarIconBrightness: Brightness.light,
   ));
 
-  // ── Firebase ─────────────────────────────────────────────────────────────
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // ── حماية الإقلاع: محاولة تشغيل الخدمات دون السماح لها بإحداث كراش ──
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print("Firebase initialization bypassed: $e");
+  }
 
-  // ── Services & Providers ─────────────────────────────────────────────────
-  await ServiceLocator.init();
+  try {
+    await ServiceLocator.init();
+  } catch (e) {
+    print("ServiceLocator initialization bypassed: $e");
+  }
 
   // ── Run ──────────────────────────────────────────────────────────────────
   runApp(const DavaStoreApp());
