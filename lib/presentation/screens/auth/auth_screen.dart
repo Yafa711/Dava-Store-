@@ -1,5 +1,5 @@
-// lib/presentation/screens/auth/auth_screen.dart
-// Beautiful glassmorphism login screen with Google Sign-In
+ //lib/presentation/screens/auth/auth_screen.dart
+ //Beautiful glassmorphism login screen with Google Sign-In
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -272,28 +272,23 @@ class _AuthScreenState extends State<AuthScreen>
   }
 
   Widget _buildGoogleButton(AuthProvider auth) {
-    if (auth.isLoading) {
-      return Container(
-        height: 52,
-        decoration: BoxDecoration(
-          color: AppTheme.glassWhite,
-          borderRadius: BorderRadius.circular(AppConstants.radiusMd),
-          border: Border.all(color: AppTheme.glassBorder),
-        ),
-        child: const Center(
-          child: SizedBox(
-            width: 24, height: 24,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation(AppTheme.accent),
-            ),
-          ),
-        ),
-      );
-    }
-
     return GestureDetector(
-      onTap: () => context.read<AuthProvider>().signInWithGoogle(),
+      onTap: () async {
+        try {
+          // استدعاء عملية تسجيل الدخول من الـ auth المعرف مسبقاً في الـ Consumer
+          await auth.signInWithGoogle();
+        } catch (e) {
+          // إظهار رسالة الخطأ للمستخدم في حال فشل الربط السحابي
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('حدث خطأ أثناء تسجيل الدخول: $e'),
+                backgroundColor: Colors.redAccent,
+              ),
+            );
+          }
+        }
+      },
       child: Container(
         height: 52,
         decoration: BoxDecoration(
@@ -302,21 +297,22 @@ class _AuthScreenState extends State<AuthScreen>
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.15),
-              blurRadius: 8, offset: const Offset(0, 2),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Google logo SVG colours simulated with coloured squares
             _googleLogo(),
             const SizedBox(width: 12),
             const Text(
               'Continue with Google',
               style: TextStyle(
                 color: Color(0xFF3C4043),
-                fontSize: 15, fontWeight: FontWeight.w600,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.2,
               ),
             ),
