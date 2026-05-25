@@ -1,6 +1,3 @@
-// android/app/build.gradle
-// DAVA Store Android configuration
-
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -27,8 +24,6 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
-// ── Required for Firebase ──
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -51,7 +46,7 @@ android {
 
     defaultConfig {
         applicationId "com.yourcompany.dava_store"
-        minSdkVersion 21          // Required for Firebase
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -64,6 +59,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // هذا البلوك الذكي يحل تعارض الـ OutputFile لجميع مكاتب Firebase القديمة والحديثة تماماً
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Dava-Store-${variant.name}-${variant.versionName}.apk"
         }
     }
 }
