@@ -11,6 +11,13 @@ buildscript {
     }
 }
 
+plugins {
+    // تعريف إصدارات البلاجنز بشكل مركزي لمنع تعارض الحزم
+    id "com.android.application" version "8.0.2" apply false
+    id "com.android.library" version "8.0.2" apply false
+    id "org.jetbrains.kotlin.android" version "1.9.0" apply false
+}
+
 allprojects {
     repositories {
         google()
@@ -24,18 +31,6 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(':app')
-}
-
-// 🔥 الترقيع المباشر بدون afterEvaluate لحل كراش OutputFile نهائياً
-subprojects {
-    ext.kotlin_version = rootProject.ext.kotlin_version
-    
-    // إجبار كل الحزم الفرعية بما فيها الفايربيس على استخدام مخرجات متوافقة
-    project.configurations.all {
-        resolutionStrategy {
-            force 'com.android.tools.build:gradle:8.0.2'
-        }
-    }
 }
 
 tasks.register("clean", Delete) {
