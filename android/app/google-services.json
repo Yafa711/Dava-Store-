@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194751529366:android:f8b93a85776b6fe5a9ddb7",
+        "android_client_info": {
+          "package_name": "com.yourcompany.davastore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194751529366-20l8me0mke2j6t757uvul8b83ggj9qif.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yourcompany.davastore",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabc6ad"
+          }
+        },
+        {
+          "client_id": "194751529366-srouj8eilptcec9q67mtuk9ht86ntc8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO_SAKV2WOhyZc4PLdYjrkcOO8pzkjw6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194751529366-srouj8eilptcec9q67mtuk9ht86ntc8c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
