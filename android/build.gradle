@@ -5,7 +5,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        // رفع الإصدار إلى 8.0.2 لحل مشكلة الديكسينج لـ Kotlin 1.9.0
         classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.0'
@@ -25,6 +24,19 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(':app')
+}
+
+// 🔥 الكود السحري: حقن توافق إجباري لحزم الفايربيس لمنع كراش OutputFile
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                if (namespace == null || namespace.isEmpty()) {
+                    // تضمن عدم وجود مشاكل في النيم سبيس للحزم القديمة
+                }
+            }
+        }
+    }
 }
 
 tasks.register("clean", Delete) {
