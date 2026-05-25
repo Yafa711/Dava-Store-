@@ -1,4 +1,4 @@
-package com.yourcompany.dava_store
+package com.yourcompany.davastore
 
 import io.flutter.embedding.android.FlutterActivity
 
