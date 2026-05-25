@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # يحل تحذير جيت هاب تماماً
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
     steps:
       - uses: actions/checkout@v4
 
@@ -24,12 +24,11 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        # تعديل الأمر هنا ليصبح ريليس رسمي وبدون ضغط يسبب مشاكل
         run: flutter build apk --release --no-shrink
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Dava-Store-APK
-          # تعديل المسار هنا ليلتقط نسخة الريليس الناتجة
-          path: build/app/outputs/flutter-apk/app-release.apk
+          # تم تعديل المسار هنا لرفع المجلد بالكامل بدلاً من ملف واحد
+          path: build/app/outputs/flutter-apk/
