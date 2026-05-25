@@ -26,15 +26,14 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-// 🔥 الكود السحري: حقن توافق إجباري لحزم الفايربيس لمنع كراش OutputFile
+// 🔥 الترقيع المباشر بدون afterEvaluate لحل كراش OutputFile نهائياً
 subprojects {
-    afterEvaluate { project ->
-        if (project.hasProperty('android')) {
-            project.android {
-                if (namespace == null || namespace.isEmpty()) {
-                    // تضمن عدم وجود مشاكل في النيم سبيس للحزم القديمة
-                }
-            }
+    ext.kotlin_version = rootProject.ext.kotlin_version
+    
+    // إجبار كل الحزم الفرعية بما فيها الفايربيس على استخدام مخرجات متوافقة
+    project.configurations.all {
+        resolutionStrategy {
+            force 'com.android.tools.build:gradle:8.0.2'
         }
     }
 }
