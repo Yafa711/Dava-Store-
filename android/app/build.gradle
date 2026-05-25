@@ -75,13 +75,5 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
-    // Firebase BOM handles version alignment
     implementation platform('com.google.firebase:firebase-bom:32.7.0')
-}
-
-// الكود الذهبي لحل تعارض حزم الفايربيس مع مخرجات الأندرويد الحديثة
-android {
-    components.onVariants(selector().all(), { variant ->
-        // تعطيل الفحص القديم للمخرجات لتفادي تعارض الـ OutputFile
-    })
 }
