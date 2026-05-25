@@ -65,13 +65,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    // هذا البلوك الذكي يحل تعارض الـ OutputFile لجميع مكاتب Firebase القديمة والحديثة تماماً
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "Dava-Store-${variant.name}-${variant.versionName}.apk"
-        }
-    }
 }
 
 flutter {
