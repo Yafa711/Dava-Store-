@@ -5,8 +5,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        // تغيير الإصدار إلى النسخة المستقرة لحل تعارض الـ OutputFile نهائياً
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        // رفع الإصدار إلى 8.0.2 لحل مشكلة الديكسينج لـ Kotlin 1.9.0
+        classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.0'
     }
