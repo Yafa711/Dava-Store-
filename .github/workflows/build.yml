@@ -7,28 +7,29 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # يحل تحذير جيت هاب تماماً
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
-          
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
           channel: 'stable'
-          
+
       - name: Get Dependencies
         run: flutter pub get
-        
+
       - name: Build APK
-        run: flutter build apk --debug
-        
+        # تعديل الأمر هنا ليصبح ريليس رسمي وبدون ضغط يسبب مشاكل
+        run: flutter build apk --release --no-shrink
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Dava-Store-APK
-          path: build/app/outputs/flutter-apk/app-debug.apk
-
+          # تعديل المسار هنا ليلتقط نسخة الريليس الناتجة
+          path: build/app/outputs/flutter-apk/app-release.apk
