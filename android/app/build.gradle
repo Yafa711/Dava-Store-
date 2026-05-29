@@ -21,7 +21,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     // تم تحديث الـ namespace ليطابق الاسم الجديد
-    namespace "com.yourcompany.davastore" 
+    namespace "com.abdulmajeed.davastore" 
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -40,7 +40,7 @@ android {
 
     defaultConfig {
         // تم تحديث الـ applicationId ليطابق الاسم الجديد
-        applicationId "com.yourcompany.davastore"
+        applicationId "com.abdulmajeed.davastore"
         minSdkVersion 23
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
